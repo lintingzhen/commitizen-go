@@ -4,6 +4,7 @@ import (
     "fmt"
     "bytes"
     "log"
+    "io/ioutil"
 )
 
 func main() {
@@ -15,11 +16,12 @@ func main() {
         log.SetFlags(log.Lshortfile | log.LstdFlags)
     } else {
         log.SetFlags(0)
+        log.SetOutput(ioutil.Discard)
     }
 
     if args.install {
         if path, err := Install(); err != nil {
-            log.Fatal(err)
+            fmt.Println(err)
         } else {
             fmt.Printf("Install commitizen to %s\n", path)
         }
@@ -37,11 +39,12 @@ func main() {
         // do git commit
         result, err := CommitMessage(buf.Bytes(), args.all)
         if err != nil {
-            fmt.Printf("run git commit failed, commit message is: \n\n\t%s\n\n", buf.String())
-            log.Fatal(err)
+            log.Printf("run git commit failed, \n")
+            log.Printf("commit message is: \n\n\t%s\n\n", buf.String())
+            fmt.Printf("%s", result)
+        } else {
+            fmt.Print(result)
         }
-
-        fmt.Print(result)
     }
 }
 

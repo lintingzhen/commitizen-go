@@ -40,11 +40,11 @@ func CommitMessage(message []byte, all bool) (string, error) {
 
     result, err := ioutil.ReadAll(stdout)
     if err != nil {
-        return "", err
+        return string(result), err
     }
 
     if err := cmd.Wait(); err != nil {
-        return "", err
+        return string(result), err
     }
 
     return string(result), nil
