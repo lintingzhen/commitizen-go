@@ -17,9 +17,9 @@ type Answers struct {
 func (answers *Answers) AssembleIntoMessage(buf *bytes.Buffer) {
     buf.WriteString(answers.Type)
     if answers.Scope != "" {
-        buf.WriteString("(" + answers.Scope + ")")
+        buf.WriteString("(" + strings.TrimSpace(answers.Scope) + ")")
     }
-    buf.WriteString(": " + answers.Subject)
+    buf.WriteString(": " + strings.TrimSpace(answers.Subject))
     if answers.Body != "" {
         buf.WriteString("\n\n" + answers.Body)
     }
