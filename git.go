@@ -1,13 +1,40 @@
 package main
 
 import (
+    "fmt"
     "os"
     "os/exec"
     "io"
     "io/ioutil"
     "strings"
+    "log"
     "path/filepath"
 )
+
+func ExitIfNotGitDirectory() {
+    // run git commit command
+    cmd := exec.Command("git", "remote")
+
+    stderr, err := cmd.StderrPipe()
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer stderr.Close()
+
+    if err := cmd.Start(); err != nil {
+        log.Fatal(err)
+    }
+
+    result, err := ioutil.ReadAll(stderr)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    if err := cmd.Wait(); err != nil {
+        fmt.Print(string(result))
+        log.Fatal(err)
+    }
+}
 
 func CommitMessage(message []byte, all bool) (string, error) {
     // save the commit message to temp file

@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    // "os"
     "bytes"
     "log"
     "io/ioutil"
@@ -26,6 +27,9 @@ func main() {
             fmt.Printf("Install commitizen to %s\n", path)
         }
     } else {
+        // exit if not git directory
+        ExitIfNotGitDirectory()
+
         // ask the question
         var answers Answers
         if err := AskForCommitMessage(&answers); err != nil {
@@ -41,10 +45,8 @@ func main() {
         if err != nil {
             log.Printf("run git commit failed, \n")
             log.Printf("commit message is: \n\n\t%s\n\n", buf.String())
-            fmt.Printf("%s", result)
-        } else {
-            fmt.Print(result)
         }
+        fmt.Print(result)
     }
 }
 
