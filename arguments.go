@@ -12,6 +12,8 @@ type Arguments struct {
     debug bool
 }
 
+var revision string
+
 var usage string = 
 `Commitizen-go v0.1:
 
@@ -51,7 +53,7 @@ func parseArgs(args *Arguments) {
         flag.Usage()
         os.Exit(0)
     } else if version {
-        fmt.Println("Commitizen-go version 0.1")
+        fmt.Printf("Commitizen-go version 0.1, build revision %s\n", revision)
         os.Exit(0)
     }
 }

@@ -21,8 +21,11 @@ Options:
 
 ### install as git subcommand
 ```
-$ go build
-$ ./commitizen --install
+$ make && make install
+```
+or 
+```
+$ make && ./commitizen --install
 ```
 
 ### commit with commitizen

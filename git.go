@@ -12,7 +12,7 @@ import (
 )
 
 func ExitIfNotGitDirectory() {
-    // run git commit command
+    // run git remote command
     cmd := exec.Command("git", "remote")
 
     stderr, err := cmd.StderrPipe()
