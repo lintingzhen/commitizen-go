@@ -15,11 +15,9 @@ type Arguments struct {
 var revision string
 
 var usage string = 
-`Commitizen-go v0.1:
-
-Usage: commitizen 
+`Usage: commitizen 
        or 
-       git cz after install
+       git cz (after install to git-core)
 
 Options:
     -a, -all        Tell the command to automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected
