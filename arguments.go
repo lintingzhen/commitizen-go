@@ -51,7 +51,7 @@ func parseArgs(args *Arguments) {
         flag.Usage()
         os.Exit(0)
     } else if version {
-        fmt.Printf("Commitizen-go version 0.1, build revision %s\n", revision)
+        fmt.Printf("Commitizen-go version 0.1.0, build revision %s\n", revision)
         os.Exit(0)
     }
 }
