@@ -92,7 +92,8 @@ func CopyFile(dstName, srcName string) (written int64, err error) {
 }
 
 func Install() (string, error) {
-    srcName := os.Args[0]
+    srcName, _ := exec.LookPath(os.Args[0])
+    log.Printf("self path: %s", srcName)
     dstDir, err := execPath()
     if err != nil {
         return "", err
