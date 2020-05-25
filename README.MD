@@ -14,6 +14,10 @@ $ brew tap lintingzhen/tap
 $ brew install commitizen-go
 $ sudo commitizen --install
 ```
+### installation with AUR package (Arch Linux):
+```
+$ yay commitizen-go
+```
 ### installation with source code:
 ```
 $ make && make install
