@@ -13,7 +13,7 @@ Contents
 ```
 $ brew tap lintingzhen/tap
 $ brew install commitizen-go
-$ sudo commitizen --install
+$ sudo commitizen-go install
 ```
 ### installation with AUR package (Arch Linux):
 ```
@@ -25,7 +25,7 @@ $ make && make install
 ```
 or 
 ```
-$ make && ./commitizen-go --install
+$ make && ./commitizen-go install
 ```
 ### commit with commitizen
 ```
