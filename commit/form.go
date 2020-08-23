@@ -7,6 +7,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
 	"gopkg.in/AlecAivazis/survey.v1"
 )
@@ -81,7 +82,7 @@ func loadForm() (qs []*survey.Question, _ string, err error) {
 	if sub == nil {
 		log.Printf("no message in config file")
 	} else {
-		if err := sub.Unmarshal(&msgConfig); err != nil {
+		if err := sub.Unmarshal(&msgConfig, func(cfg *mapstructure.DecoderConfig) { cfg.ZeroFields = true }); err != nil {
 			log.Printf("ill message in config file, err=%v", err)
 		} else {
 			log.Printf("msg config from file: %v", msgConfig)
