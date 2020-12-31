@@ -7,9 +7,9 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
-	"gopkg.in/AlecAivazis/survey.v1"
 )
 
 func FillOutForm() ([]byte, error) {
