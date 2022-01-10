@@ -60,7 +60,7 @@ func assembleMessage(buf *bytes.Buffer, tmplText string, answers map[string]inte
 		for k, v := range answers {
 			if option, ok := v.(survey.OptionAnswer); ok {
 				answers[k] = option.Value
-			}else if vString, ok := v.(string); ok {
+			} else if vString, ok := v.(string); ok {
 				answers[k] = strings.TrimSpace(vString)
 			}
 		}
