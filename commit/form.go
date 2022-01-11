@@ -9,7 +9,7 @@ import (
 
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
-	"gopkg.in/AlecAivazis/survey.v1"
+	"github.com/AlecAivazis/survey/v2"
 )
 
 func FillOutForm() ([]byte, error) {
@@ -58,7 +58,9 @@ func assembleMessage(buf *bytes.Buffer, tmplText string, answers map[string]inte
 		return err
 	} else {
 		for k, v := range answers {
-			if vString, ok := v.(string); ok {
+			if option, ok := v.(survey.OptionAnswer); ok {
+				answers[k] = option.Value
+			} else if vString, ok := v.(string); ok {
 				answers[k] = strings.TrimSpace(vString)
 			}
 		}
@@ -119,15 +121,11 @@ func loadForm() (qs []*survey.Question, _ string, err error) {
 			q.Prompt = prompt
 			q.Transform = func(options []*FormItemOption) func(interface{}) interface{} {
 				return func(ans interface{}) (newAns interface{}) {
-					if ansString, ok := ans.(string); !ok {
+					if ans, ok := ans.(survey.OptionAnswer); !ok {
 						return nil
 					} else {
-						for _, option := range options {
-							if ansString == option.Desc {
-								return option.Name
-							}
-						}
-						return nil
+						ans.Value = options[ans.Index].Name
+						return ans
 					}
 				}
 			}(item.Options)
