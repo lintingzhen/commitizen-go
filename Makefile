@@ -1,5 +1,6 @@
+VERSION := $(shell git describe --abbrev=0)
 COMMIT_REVISION := $(shell git log --pretty=%h -1)
-REVISION_FLAG := "-X github.com/lintingzhen/commitizen-go/cmd.revision=${COMMIT_REVISION}"
+REVISION_FLAG := "-X github.com/lintingzhen/commitizen-go/cmd.revision=${COMMIT_REVISION} -X github.com/lintingzhen/commitizen-go/cmd.version=${VERSION}"
 TARGET := commitizen-go
 GOFILES := $(wildcard *.go) $(wildcard cmd/*.go) $(wildcard git/*.go) $(wildcard commit/*.go)
 
