@@ -90,6 +90,6 @@ func RootCmd(command *cobra.Command, args []string) {
 			log.Printf("run git commit failed, err=%v\n", err)
 			log.Printf("commit message is: \n\n%s\n\n", string(message))
 		}
-		fmt.Print(result)
+		fmt.Print(string(result))
 	}
 }
