@@ -1,0 +1,4 @@
+builds:
+  - ldflags:
+      - -X github.com/lintingzhen/commitizen-go/cmd.version={{.Version}}
+      - -X github.com/lintingzhen/commitizen-go/cmd.revision={{.ShortCommit}}
