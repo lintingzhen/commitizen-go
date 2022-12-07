@@ -65,7 +65,7 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-	// Search config in home directory and repository root directory with name ".git-czrc" (without extension).
+	// Search config in home directory and repository root directory with name ".git-czrc" or ".git-czrc.json".
 	viper.AddConfigPath(stat.Path)
 	viper.AddConfigPath(home)
 	viper.SetConfigName(".git-czrc")
