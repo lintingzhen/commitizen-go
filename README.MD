@@ -52,8 +52,10 @@ Use "commitizen-go [command] --help" for more information about a command.
 ```
 
 ## Configure
-You can customize your commit type, items, and how to assemble these items through the configuration file.
-Configuration file path is `~/.git-czrc`, and the format is the same as the defaultConfig string in the file commit/defaultConfig.go.
+You can set configuration file that `.git-czrc` at repository root or home directory. (You can also add the extension to file, like `.git-czrc.json`)
+The configure file that located in repository root have a priority over the one in home directory.
+The format is the same as the defaultConfig string in the file [commit/defaultConfig.go](https://github.com/lintingzhen/commitizen-go/blob/master/commit/defaultConfig.go).
+
 Type item like that:
 ```
 ...
