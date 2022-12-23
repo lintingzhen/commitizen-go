@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/integralist/go-findroot/find"
 	"github.com/lintingzhen/commitizen-go/commit"
 	"github.com/lintingzhen/commitizen-go/git"
 	homedir "github.com/mitchellh/go-homedir"
@@ -53,27 +54,35 @@ func initConfig() {
 	}
 
 	// Find home directory.
-	if home, err := homedir.Dir(); err != nil {
+	home, err := homedir.Dir()
+	if err != nil {
 		log.Printf("Get home dir failed, err=%v\n", err)
 		os.Exit(1)
-	} else {
-		// Search config in home directory with name ".git-czrc" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".git-czrc")
-		viper.SetConfigType("json")
-
-		if err := viper.ReadInConfig(); err != nil {
-			if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-				// Config file not found; ignore error if desired
-				log.Printf("can not find config file\n")
-			} else {
-				// Config file was found but another error was produced
-				log.Printf("read config failed, err=%v\n", err)
-			}
-		} else {
-			log.Printf("read config success\n")
-		}
 	}
+	stat, err := find.Repo()
+	if err != nil {
+		log.Printf("Get git repository root failed, err=%v\n", err)
+		os.Exit(1)
+	}
+
+	// Search config in home directory and repository root directory with name ".git-czrc" or ".git-czrc.json".
+	viper.AddConfigPath(stat.Path)
+	viper.AddConfigPath(home)
+	viper.SetConfigName(".git-czrc")
+	viper.SetConfigType("json")
+
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			// Config file not found; ignore error if desired
+			log.Printf("can not find config file\n")
+		} else {
+			// Config file was found but another error was produced
+			log.Printf("read config failed, err=%v\n", err)
+		}
+	} else {
+		log.Printf("read config success\n")
+	}
+
 }
 
 func RootCmd(command *cobra.Command, args []string) {
