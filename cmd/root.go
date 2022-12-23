@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/integralist/go-findroot/find"
 	"github.com/lintingzhen/commitizen-go/commit"
 	"github.com/lintingzhen/commitizen-go/git"
 	homedir "github.com/mitchellh/go-homedir"
@@ -59,14 +58,14 @@ func initConfig() {
 		log.Printf("Get home dir failed, err=%v\n", err)
 		os.Exit(1)
 	}
-	stat, err := find.Repo()
-	if err != nil {
-		log.Printf("Get git repository root failed, err=%v\n", err)
+	workingTreeRoot, err := git.WorkingTreeRoot()
+	if err != nil || workingTreeRoot == "" {
+		log.Printf("current directory is not a git working tree\n")
 		os.Exit(1)
 	}
 
-	// Search config in home directory and repository root directory with name ".git-czrc" or ".git-czrc.json".
-	viper.AddConfigPath(stat.Path)
+	// Search config in repository working tree root directory and home directory with name ".git-czrc" or ".git-czrc.json".
+	viper.AddConfigPath(workingTreeRoot)
 	viper.AddConfigPath(home)
 	viper.SetConfigName(".git-czrc")
 	viper.SetConfigType("json")

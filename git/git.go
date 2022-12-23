@@ -52,6 +52,15 @@ func IsCurrentDirectoryGitRepo() (bool, error) {
 	return true, nil
 }
 
+// WorkingTreeRoot return path of the top-level directory of the working tree
+func WorkingTreeRoot() (path string, err error) {
+	output, err := exec.Command("git", "rev-parse", "--show-toplevel").Output()
+	if err != nil {
+		return "", err
+	}
+	return strings.TrimSpace(string(output)), nil
+}
+
 func CommitMessage(message []byte, all bool) ([]byte, error) {
 	// save the commit message to temp file
 	var err error
