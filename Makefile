@@ -3,6 +3,7 @@ COMMIT_REVISION := $(shell git log --pretty=%h -1)
 REVISION_FLAG := "-X github.com/lintingzhen/commitizen-go/cmd.revision=${COMMIT_REVISION} -X github.com/lintingzhen/commitizen-go/cmd.version=${VERSION}"
 TARGET := commitizen-go
 GOFILES := $(wildcard *.go) $(wildcard cmd/*.go) $(wildcard git/*.go) $(wildcard commit/*.go)
+GOARCH := $(shell go env GOARCH)
 
 ifeq ($(OS),Windows_NT)
 	GOOS := windows
@@ -27,6 +28,6 @@ clean:
     
 
 commitizen-go: $(GOFILES)
-	CGO_ENABLED=0 GOOS=${GOOS} GOARCH=amd64 go build -o $@ -ldflags ${REVISION_FLAG}
+	CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build -o $@ -ldflags ${REVISION_FLAG}
 
 .PHONY: all install clean 
